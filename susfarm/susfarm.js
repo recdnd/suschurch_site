@@ -50,6 +50,14 @@
       // Fallback: return key if no i18n system available
       return key;
     }
+    
+    // If translation missing (returns the key itself), return empty string to avoid leaking keys
+    // This prevents i18n keys from being displayed in the UI
+    if (str === key) {
+      console.warn(`[tx] Translation missing for key: ${key}, lang: ${window.currentLang || 'en'}`);
+      return ''; // Return empty instead of key to prevent i18n leakage
+    }
+    
     // Replace placeholders if vars provided
     if (vars && Object.keys(vars).length > 0) {
       str = str.replace(/\{(\w+)\}/g, (match, k) => vars[k] !== undefined ? vars[k] : match);
@@ -482,10 +490,12 @@
     const eventText = event ? tx(event.headlineKey) : tx('g.susfarm.market.hud.event_none');
     
     document.getElementById('marketGoodsCount').textContent = totalGoods;
-    document.getElementById('marketVolatility').textContent = tx(volatilityKey);
+    const volatilityText = tx(volatilityKey);
+    if (volatilityText) document.getElementById('marketVolatility').textContent = volatilityText;
     document.getElementById('marketRefresh').textContent = formatTime(Math.floor(nextRefresh / 1000));
-    document.getElementById('marketMood').textContent = tx(moodKey);
-    document.getElementById('marketEvent').textContent = eventText;
+    const moodText = tx(moodKey);
+    if (moodText) document.getElementById('marketMood').textContent = moodText;
+    if (eventText) document.getElementById('marketEvent').textContent = eventText;
     
     // Goods list
     const goodsList = document.createElement('div');
