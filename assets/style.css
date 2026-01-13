@@ -502,30 +502,56 @@ input[type="text"]:focus-visible {
   margin: 1.5rem 0;
 }
 
-/* Confess container - aligned with terminal but using pink */
+/* === CONFESS::ROOM as Pink Terminal Skin === */
+#confess {
+  --confess-accent: var(--color-pink);
+  --confess-panel-bg: rgba(0, 0, 0, 0.8);
+  /* Ensure text color doesn't inherit pink globally */
+  color: var(--color-text);
+}
+
+/* Title stays pink */
+#confess h3 {
+  color: var(--confess-accent);
+}
+
+/* Paragraph text stays normal color */
+#confess p,
+#confess h4 {
+  color: var(--color-text);
+}
+
+/* Confess container - exactly match terminal-container but pink */
 .confess-container {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid var(--color-pink);
+  background: var(--confess-panel-bg);
+  border: 1px solid var(--confess-accent);
   font-family: 'Courier New', monospace;
   font-size: 0.9rem;
   line-height: 1.5;
   margin-top: 0.5rem;
+  /* Match terminal-container exactly */
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .confess-container:focus-within {
   outline: none;
-  border: 1px solid var(--color-pink);
+  border: 1px solid var(--confess-accent);
 }
 
+/* Input line - match terminal-input-line */
 .confess-input-line {
   display: flex;
   align-items: flex-start;
   padding: 0.75rem 1rem;
+  min-height: 44px;
   gap: 0.25rem;
 }
 
+/* Prompt - match terminal-prompt but pink */
 .confess-prompt {
-  color: var(--color-pink);
+  color: var(--confess-accent);
   font-family: monospace;
   user-select: none;
   pointer-events: none;
@@ -533,12 +559,13 @@ input[type="text"]:focus-visible {
   padding-top: 0.25rem;
 }
 
+/* Textarea - match terminal-input but pink, with proper caret */
 .confess-input {
   flex: 1;
   outline: none !important;
   border: none !important;
   background: transparent;
-  color: var(--color-pink);
+  color: var(--confess-accent) !important;
   font-family: monospace;
   font-size: 0.9rem;
   padding: 0;
@@ -546,13 +573,19 @@ input[type="text"]:focus-visible {
   box-shadow: none !important;
   resize: vertical;
   min-height: 100px;
-  caret-color: var(--color-pink);
+  /* Proper caret color - pink when focused, ensure it's visible */
+  caret-color: var(--confess-accent) !important;
+  /* Ensure cursor is visible and styled correctly */
+  cursor: text;
+  /* Prevent any color inheritance issues */
+  border-color: transparent !important;
 }
 
 .confess-input:focus {
   outline: none !important;
   border: none !important;
   box-shadow: none !important;
+  caret-color: var(--confess-accent);
 }
 
 .confess-input:focus-visible {
@@ -561,16 +594,20 @@ input[type="text"]:focus-visible {
   box-shadow: none !important;
 }
 
+/* Placeholder - match terminal placeholder (grey, not pink) */
 .confess-input::placeholder {
-  color: rgba(255, 0, 255, 0.5);
+  color: #666;
+  opacity: 1;
 }
 
+/* Divider - match terminal-divider but pink */
 .confess-divider {
-  border-top: 1px solid var(--color-pink);
+  border-top: 1px solid var(--confess-accent);
   margin: 0;
   padding: 0;
 }
 
+/* Submit line - match terminal input line */
 .confess-submit-line {
   display: flex;
   align-items: center;
@@ -578,29 +615,34 @@ input[type="text"]:focus-visible {
   min-height: 44px;
 }
 
+/* Submit button - pink theme, match terminal button style */
 .confess-submit-btn {
   background: transparent;
-  color: var(--color-pink);
-  border: 1px solid var(--color-pink);
+  color: var(--confess-accent);
+  border: 1px solid var(--confess-accent);
   padding: 0.5rem 1rem;
   font-family: monospace;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
+  /* Match terminal button cursor */
+  cursor: pointer;
 }
 
 .confess-submit-btn:hover {
-  background: rgba(255, 0, 255, 0.1);
-  border-color: var(--color-pink);
+  background: var(--confess-accent);
+  color: var(--color-bg);
 }
 
 .confess-submit-btn:focus-visible {
-  outline: 2px solid var(--color-pink);
+  outline: 2px solid var(--confess-accent);
   outline-offset: 2px;
 }
 
 .confess-submit-btn:active {
-  background: rgba(255, 0, 255, 0.2);
+  background: var(--confess-accent);
+  color: var(--color-bg);
+  opacity: 0.9;
 }
 
 .confess-list {
