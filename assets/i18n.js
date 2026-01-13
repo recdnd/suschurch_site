@@ -1046,34 +1046,30 @@ function applyLangTo(root, lang) {
 
   // text nodes
   const elements = root.querySelectorAll('[data-i18n]');
-  console.log(`[applyLangTo] Found ${elements.length} elements with data-i18n in`, root.id || root.className || 'root');
   
-  elements.forEach(el => {
+  elements.forEach((el, idx) => {
     const key = el.getAttribute('data-i18n');
     if (!key) return;
     
-    // #region agent log
-    const hasKey = dict.hasOwnProperty(key);
-    fetch('http://127.0.0.1:7245/ingest/de8321b2-c2bb-40b1-b6bd-d899f9ed99e7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'i18n.js:applyLangTo',message:'Processing data-i18n',data:{key:key,lang:L,hasKeyInDict:hasKey,dictKeysSample:Object.keys(dict).slice(0,5),keyValue:dict[key]},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-    // #endregion
-    
     const translated = t(key, L);
     
-    // Debug: log if translation failed
+    // If translation is missing (returns the key itself), do NOT overwrite fallback text
     if (translated === key) {
-      console.warn(`[applyLangTo] Translation failed for key: ${key}, lang: ${L}, hasKey: ${hasKey}`);
+      console.warn(`[applyLangTo] Translation missing for key: ${key}, lang: ${L}. Keeping fallback text.`);
+      return; // Keep existing textContent as fallback
     }
     
-    // #region agent log
-    fetch('http://127.0.0.1:7245/ingest/de8321b2-c2bb-40b1-b6bd-d899f9ed99e7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'i18n.js:applyLangTo:after-t',message:'After t() call',data:{key:key,result:translated,isSameAsKey:translated===key},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-    // #endregion
     el.textContent = translated;
   });
 
   // placeholders (inputs/textarea)
   root.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    el.setAttribute('placeholder', t(key, L));
+    const ph = t(key, L);
+    // Only set placeholder if translation exists (not the key itself)
+    if (ph !== key) {
+      el.setAttribute('placeholder', ph);
+    }
   });
 }
 

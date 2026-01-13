@@ -608,14 +608,7 @@
     
     // Re-apply i18n to dynamically rendered content (including data-i18n attributes)
     if (window.applyLangTo) {
-      console.log('[renderMarket] Calling applyLangTo on container:', container.id);
-      // #region agent log
-      fetch('http://127.0.0.1:7245/ingest/de8321b2-c2bb-40b1-b6bd-d899f9ed99e7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'susfarm.js:renderMarket:before-applyLangTo',message:'About to call applyLangTo',data:{containerId:container.id,currentLang:window.currentLang,hasApplyLangTo:!!window.applyLangTo},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-      // #endregion
       window.applyLangTo(container, window.currentLang || 'en');
-      // #region agent log
-      fetch('http://127.0.0.1:7245/ingest/de8321b2-c2bb-40b1-b6bd-d899f9ed99e7',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'susfarm.js:renderMarket:after-applyLangTo',message:'After applyLangTo call',data:{containerId:container.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-      // #endregion
     } else {
       console.error('[renderMarket] window.applyLangTo is not available!');
     }
