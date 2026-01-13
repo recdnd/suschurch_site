@@ -982,12 +982,26 @@ function applyLang(lang) {
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    el.textContent = t(key, lang);
+    if (!key) return;
+
+    const translated = t(key, lang);
+
+    // If translation missing, keep existing fallback text (do NOT leak the key)
+    if (!translated || translated === key) return;
+
+    el.textContent = translated;
   });
 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
-    el.placeholder = t(key, lang);
+    if (!key) return;
+
+    const ph = t(key, lang);
+
+    // Only set placeholder if translation exists
+    if (!ph || ph === key) return;
+
+    el.placeholder = ph;
   });
 
   // Use new key with fallback to legacy
@@ -1036,40 +1050,34 @@ function t2(keys, lang) {
 
 // Minimal: apply i18n only inside a subtree root (instead of whole document)
 function applyLangTo(root, lang) {
-  if (!root) {
-    console.warn('[applyLangTo] root is null/undefined');
-    return;
-  }
+  if (!root) return;
 
   const L = lang || currentLang || 'en';
-  const dict = I18N[L] || I18N.en || {};
 
   // text nodes
-  const elements = root.querySelectorAll('[data-i18n]');
-  
-  elements.forEach((el, idx) => {
+  root.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (!key) return;
-    
+
     const translated = t(key, L);
-    
-    // If translation is missing (returns the key itself), do NOT overwrite fallback text
-    if (translated === key) {
-      console.warn(`[applyLangTo] Translation missing for key: ${key}, lang: ${L}. Keeping fallback text.`);
-      return; // Keep existing textContent as fallback
-    }
-    
+
+    // If translation missing, keep existing fallback text
+    if (!translated || translated === key) return;
+
     el.textContent = translated;
   });
 
   // placeholders (inputs/textarea)
   root.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
+    if (!key) return;
+
     const ph = t(key, L);
-    // Only set placeholder if translation exists (not the key itself)
-    if (ph !== key) {
-      el.setAttribute('placeholder', ph);
-    }
+
+    // Only set placeholder if translation exists
+    if (!ph || ph === key) return;
+
+    el.setAttribute('placeholder', ph);
   });
 }
 
