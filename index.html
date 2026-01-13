@@ -123,12 +123,21 @@
       <h3 data-i18n="g.confess.title">[CONFESS::ROOM]</h3>
       <p data-i18n="g.confess.desc">Enter your confession (1-500 characters):</p>
       <form id="confessForm" class="confess-form">
-        <textarea id="confessTextarea" 
-                  data-i18n-placeholder="g.confess.input.placeholder" 
-                  placeholder="Type your confession here..."
-                  rows="4"
-                  maxlength="500"></textarea>
-        <button type="submit" class="btn-pray" data-i18n="g.confess.cta.submit">Submit Confession</button>
+        <div class="confess-container">
+          <div class="confess-input-line">
+            <span class="confess-prompt">CONFESS&gt;</span>
+            <textarea id="confessTextarea" 
+                      class="confess-input"
+                      data-i18n-placeholder="g.confess.input.placeholder" 
+                      placeholder="Type your confession here..."
+                      rows="4"
+                      maxlength="500"></textarea>
+          </div>
+          <div class="confess-divider"></div>
+          <div class="confess-submit-line">
+            <button type="submit" class="confess-submit-btn" data-i18n="g.confess.cta.submit">Submit Confession</button>
+          </div>
+        </div>
       </form>
       <h4 data-i18n="g.confess.list">Your Confessions:</h4>
       <ul id="confessList" class="confess-list"></ul>

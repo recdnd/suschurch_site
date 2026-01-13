@@ -502,6 +502,107 @@ input[type="text"]:focus-visible {
   margin: 1.5rem 0;
 }
 
+/* Confess container - aligned with terminal but using pink */
+.confess-container {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--color-pink);
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.confess-container:focus-within {
+  outline: none;
+  border: 1px solid var(--color-pink);
+}
+
+.confess-input-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem 1rem;
+  gap: 0.25rem;
+}
+
+.confess-prompt {
+  color: var(--color-pink);
+  font-family: monospace;
+  user-select: none;
+  pointer-events: none;
+  flex-shrink: 0;
+  padding-top: 0.25rem;
+}
+
+.confess-input {
+  flex: 1;
+  outline: none !important;
+  border: none !important;
+  background: transparent;
+  color: var(--color-pink);
+  font-family: monospace;
+  font-size: 0.9rem;
+  padding: 0;
+  margin: 0;
+  box-shadow: none !important;
+  resize: vertical;
+  min-height: 100px;
+  caret-color: var(--color-pink);
+}
+
+.confess-input:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.confess-input:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.confess-input::placeholder {
+  color: rgba(255, 0, 255, 0.5);
+}
+
+.confess-divider {
+  border-top: 1px solid var(--color-pink);
+  margin: 0;
+  padding: 0;
+}
+
+.confess-submit-line {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  min-height: 44px;
+}
+
+.confess-submit-btn {
+  background: transparent;
+  color: var(--color-pink);
+  border: 1px solid var(--color-pink);
+  padding: 0.5rem 1rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confess-submit-btn:hover {
+  background: rgba(255, 0, 255, 0.1);
+  border-color: var(--color-pink);
+}
+
+.confess-submit-btn:focus-visible {
+  outline: 2px solid var(--color-pink);
+  outline-offset: 2px;
+}
+
+.confess-submit-btn:active {
+  background: rgba(255, 0, 255, 0.2);
+}
+
 .confess-list {
   list-style: none;
   padding: 0;
@@ -659,6 +760,28 @@ footer {
   .confess-item-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+  
+  .confess-input-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .confess-prompt {
+    padding-top: 0;
+  }
+  
+  .confess-input {
+    width: 100%;
+  }
+  
+  .confess-submit-line {
+    justify-content: center;
+  }
+  
+  .confess-submit-btn {
+    width: 100%;
   }
 }
 
