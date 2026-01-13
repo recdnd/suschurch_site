@@ -110,8 +110,10 @@
 }
 
 .btn-small:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 255, 0, 0.3);
 }
 
 .btn-harvest {
@@ -422,5 +424,74 @@
     max-width: none;
     transform: translateY(-50%);
   }
+}
+
+/* Market Goods */
+.market-goods-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.market-good-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--color-green);
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.good-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.rare-badge {
+  background: var(--color-pink);
+  color: var(--color-bg);
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.good-info {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.good-info div {
+  margin: 0.25rem 0;
+}
+
+.good-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.good-empty {
+  color: rgba(0, 255, 0, 0.6);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.market-log {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 255, 0, 0.3);
+}
+
+.market-log h4 {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 

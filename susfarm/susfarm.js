@@ -522,7 +522,7 @@
         <div class="good-info">
           <div><strong>${tx('g.susfarm.market.owned')}:</strong> ${owned}</div>
           <div><strong>${tx('g.susfarm.market.price')}:</strong> ${price} 💰 ${changeText}</div>
-          ${good.edible ? `<div><strong>${tx('g.susfarm.consume.title')}:</strong> ${tx('g.susfarm.consume.cta')}</div>` : ''}
+          ${good.edible ? `<div><strong>${tx('g.susfarm.consume.title')}:</strong> ${owned > 0 ? tx('g.susfarm.consume.cta') : (tx('g.susfarm.consume.edible') || 'Edible')}</div>` : ''}
         </div>
         <div class="good-actions" data-good-key="${key}">
           ${owned > 0 ? `
@@ -531,7 +531,14 @@
               <button class="btn-small" data-action="sell" data-count="${owned}">${tx('g.susfarm.market.action.sell_all')}</button>
             ` : ''}
             ${good.edible ? `<button class="btn-small" data-action="consume" data-count="1">${tx('g.susfarm.consume.cta')}</button>` : ''}
-          ` : '<div class="good-empty">' + tx('g.susfarm.market.no_goods') + '</div>'}
+          ` : `
+            ${good.basePrice > 0 ? `
+              <button class="btn-small" disabled>${tx('g.susfarm.market.action.sell_one')}</button>
+              <button class="btn-small" disabled>${tx('g.susfarm.market.action.sell_all')}</button>
+            ` : ''}
+            ${good.edible ? `<button class="btn-small" disabled>${tx('g.susfarm.consume.cta')}</button>` : ''}
+            <div class="good-empty">${tx('g.susfarm.market.harvest_first') || 'Harvest first to get goods'}</div>
+          `}
         </div>
       `;
       
